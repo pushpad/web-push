@@ -91,7 +91,7 @@ describe WebPush::Request do
       time = Time.at(1_476_150_897)
       jwt_payload = {
         aud: 'https://fcm.googleapis.com',
-        exp: time.to_i + 24 * 60 * 60,
+        exp: time.to_i + 12 * 60 * 60,
         sub: 'mailto:sender@example.com'
       }
       jwt_header_fields = { "typ": "JWT", "alg": "ES256" }
