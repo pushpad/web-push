@@ -1,6 +1,7 @@
 # WebPush
 
 [![Gem Version](https://badge.fury.io/rb/web-push.svg)](https://badge.fury.io/rb/web-push)
+![Build Status](https://github.com/pushpad/web-push/workflows/CI/badge.svg)
 
 This gem makes it possible to send push messages to web browsers from Ruby backends using the [Web Push Protocol](https://datatracker.ietf.org/doc/html/rfc8030). It supports [Message Encryption for Web Push](https://datatracker.ietf.org/doc/html/rfc8291) and [VAPID](https://datatracker.ietf.org/doc/html/rfc8292).
 
