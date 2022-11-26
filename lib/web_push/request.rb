@@ -9,7 +9,6 @@ module WebPush
   GCM_URL = 'https://android.googleapis.com/gcm/send'.freeze
   TEMP_GCM_URL = 'https://fcm.googleapis.com/fcm'.freeze
 
-  # rubocop:disable Metrics/ClassLength
   class Request
     def initialize(message: '', subscription:, vapid:, **options)
       endpoint = subscription.fetch(:endpoint)
@@ -19,7 +18,6 @@ module WebPush
       @options = default_options.merge(options)
     end
 
-    # rubocop:disable Metrics/AbcSize
     def perform
       http = Net::HTTP.new(uri.host, uri.port, *proxy_options)
       http.use_ssl = true
@@ -35,7 +33,6 @@ module WebPush
 
       resp
     end
-    # rubocop:enable Metrics/AbcSize
 
     def proxy_options
       return [] unless @options[:proxy]
@@ -45,7 +42,6 @@ module WebPush
       [proxy_uri.host, proxy_uri.port, proxy_uri.user, proxy_uri.password]
     end
 
-    # rubocop:disable Metrics/MethodLength
     def headers
       headers = {}
       headers['Content-Type'] = 'application/octet-stream'
@@ -65,7 +61,6 @@ module WebPush
 
       headers
     end
-    # rubocop:enable Metrics/MethodLength
 
     def build_vapid_header
       # https://tools.ietf.org/id/draft-ietf-webpush-vapid-03.html
@@ -164,7 +159,6 @@ module WebPush
       WebPush.encode64(bin).delete('=')
     end
 
-    # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity, Style/GuardClause
     def verify_response(resp)
       if resp.is_a?(Net::HTTPGone) # 410
         raise ExpiredSubscription.new(resp, uri.host)
@@ -183,7 +177,5 @@ module WebPush
         raise ResponseError.new(resp, uri.host)
       end
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity, Style/GuardClause
   end
-  # rubocop:enable Metrics/ClassLength
 end

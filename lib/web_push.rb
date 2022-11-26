@@ -34,7 +34,6 @@ module WebPush
     # @param options [Hash<Symbol,String>] additional options for the notification
     # @option options [#to_s] :ttl Time-to-live in seconds
     # @option options [#to_s] :urgency Urgency can be very-low, low, normal, high
-    # rubocop:disable Metrics/ParameterLists
     def payload_send(message: '', endpoint:, p256dh: '', auth: '', vapid: {}, **options)
       WebPush::Request.new(
         message: message,
@@ -43,7 +42,6 @@ module WebPush
         **options
       ).perform
     end
-    # rubocop:enable Metrics/ParameterLists
 
     # Generate a VapidKey instance to obtain base64 encoded public and private keys
     # suitable for VAPID protocol JSON web token signing

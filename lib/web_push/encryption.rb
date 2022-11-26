@@ -4,7 +4,6 @@ module WebPush
   module Encryption
     extend self
 
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def encrypt(message, p256dh, auth)
       assert_arguments(message, p256dh, auth)
 
@@ -43,7 +42,6 @@ module WebPush
 
       aes128gcmheader + ciphertext
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
     private
 
