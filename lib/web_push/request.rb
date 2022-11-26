@@ -112,7 +112,7 @@ module WebPush
     end
 
     def expiration
-      @vapid_options.fetch(:expiration, 24 * 60 * 60)
+      @vapid_options.fetch(:expiration, 12 * 60 * 60)
     end
 
     def subject
