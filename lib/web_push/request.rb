@@ -4,7 +4,7 @@ require 'uri'
 require 'jwt'
 require 'base64'
 
-module Webpush
+module WebPush
   # It is temporary URL until supported by the GCM server.
   GCM_URL = 'https://android.googleapis.com/gcm/send'.freeze
   TEMP_GCM_URL = 'https://fcm.googleapis.com/fcm'.freeze
@@ -161,7 +161,7 @@ module Webpush
     end
 
     def trim_encode64(bin)
-      Webpush.encode64(bin).delete('=')
+      WebPush.encode64(bin).delete('=')
     end
 
     # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity, Style/GuardClause

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Webpush
+module WebPush
   class Railtie < Rails::Railtie
     rake_tasks do
-      load 'tasks/webpush.rake'
+      load 'tasks/web_push.rake'
     end
   end
 end

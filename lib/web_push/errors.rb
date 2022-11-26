@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Webpush
+module WebPush
   class Error < RuntimeError; end
 
   class ConfigurationError < Error; end

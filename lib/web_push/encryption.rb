@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Webpush
+module WebPush
   module Encryption
     extend self
 
@@ -16,12 +16,12 @@ module Webpush
       server_public_key_bn = server.public_key.to_bn
 
       group = OpenSSL::PKey::EC::Group.new(group_name)
-      client_public_key_bn = OpenSSL::BN.new(Webpush.decode64(p256dh), 2)
+      client_public_key_bn = OpenSSL::BN.new(WebPush.decode64(p256dh), 2)
       client_public_key = OpenSSL::PKey::EC::Point.new(group, client_public_key_bn)
 
       shared_secret = server.dh_compute_key(client_public_key)
 
-      client_auth_token = Webpush.decode64(auth)
+      client_auth_token = WebPush.decode64(auth)
 
       info = "WebPush: info\0" + client_public_key_bn.to_s(2) + server_public_key_bn.to_s(2)
       content_encryption_key_info = "Content-Encoding: aes128gcm\0"

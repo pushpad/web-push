@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Webpush::Encryption do
+describe WebPush::Encryption do
   describe '#encrypt' do
     let(:curve) do
       group = 'prime256v1'
@@ -17,23 +17,23 @@ describe Webpush::Encryption do
     let(:auth) { Base64.urlsafe_encode64(Random.new.bytes(16)) }
 
     it 'returns ECDH encrypted cipher text, salt, and server_public_key' do
-      payload = Webpush::Encryption.encrypt('Hello World', p256dh, auth)
+      payload = WebPush::Encryption.encrypt('Hello World', p256dh, auth)
       expect(decrypt(payload)).to eq('Hello World')
     end
 
     it 'returns error when message is blank' do
-      expect { Webpush::Encryption.encrypt(nil, p256dh, auth) }.to raise_error(ArgumentError)
-      expect { Webpush::Encryption.encrypt('', p256dh, auth) }.to raise_error(ArgumentError)
+      expect { WebPush::Encryption.encrypt(nil, p256dh, auth) }.to raise_error(ArgumentError)
+      expect { WebPush::Encryption.encrypt('', p256dh, auth) }.to raise_error(ArgumentError)
     end
 
     it 'returns error when p256dh is blank' do
-      expect { Webpush::Encryption.encrypt('Hello world', nil, auth) }.to raise_error(ArgumentError)
-      expect { Webpush::Encryption.encrypt('Hello world', '', auth) }.to raise_error(ArgumentError)
+      expect { WebPush::Encryption.encrypt('Hello world', nil, auth) }.to raise_error(ArgumentError)
+      expect { WebPush::Encryption.encrypt('Hello world', '', auth) }.to raise_error(ArgumentError)
     end
 
     it 'returns error when auth is blank' do
-      expect { Webpush::Encryption.encrypt('Hello world', p256dh, '') }.to raise_error(ArgumentError)
-      expect { Webpush::Encryption.encrypt('Hello world', p256dh, nil) }.to raise_error(ArgumentError)
+      expect { WebPush::Encryption.encrypt('Hello world', p256dh, '') }.to raise_error(ArgumentError)
+      expect { WebPush::Encryption.encrypt('Hello world', p256dh, nil) }.to raise_error(ArgumentError)
     end
 
     # Bug fix for https://github.com/zaru/webpush/issues/22
@@ -41,7 +41,7 @@ describe Webpush::Encryption do
       unpadded_p256dh = p256dh.gsub(/=*\Z/, '')
       unpadded_auth = auth.gsub(/=*\Z/, '')
 
-      payload = Webpush::Encryption.encrypt('Hello World', unpadded_p256dh, unpadded_auth)
+      payload = WebPush::Encryption.encrypt('Hello World', unpadded_p256dh, unpadded_auth)
       expect(decrypt(payload)).to eq('Hello World')
     end
 
@@ -61,7 +61,7 @@ describe Webpush::Encryption do
       shared_secret = curve.dh_compute_key(server_public_key)
 
       client_public_key_bn = curve.public_key.to_bn
-      client_auth_token = Webpush.decode64(auth)
+      client_auth_token = WebPush.decode64(auth)
 
       info = "WebPush: info\0" + client_public_key_bn.to_s(2) + server_public_key_bn.to_s(2)
       content_encryption_key_info = "Content-Encoding: aes128gcm\0"

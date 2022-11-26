@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module Webpush
+module WebPush
   # Class for abstracting the generation and encoding of elliptic curve public and private keys for use with the VAPID protocol
   #
   # @attr_reader [OpenSSL::PKey::EC] :curve the OpenSSL elliptic curve instance
   class VapidKey
     # Create a VapidKey instance from encoded elliptic curve public and private keys
     #
-    # @return [Webpush::VapidKey] a VapidKey instance for the given public and private keys
+    # @return [WebPush::VapidKey] a VapidKey instance for the given public and private keys
     def self.from_keys(public_key, private_key)
       key = new
       key.public_key = public_key
@@ -18,7 +18,7 @@ module Webpush
 
     # Create a VapidKey instance from pem encoded elliptic curve public and private keys
     #
-    # @return [Webpush::VapidKey] a VapidKey instance for the given public and private keys
+    # @return [WebPush::VapidKey] a VapidKey instance for the given public and private keys
     def self.from_pem(pem)
       key = new
       src = OpenSSL::PKey.read pem
@@ -91,11 +91,11 @@ module Webpush
     private
 
     def to_big_num(key)
-      OpenSSL::BN.new(Webpush.decode64(key), 2)
+      OpenSSL::BN.new(WebPush.decode64(key), 2)
     end
 
     def encode64(bin)
-      Webpush.encode64(bin)
+      WebPush.encode64(bin)
     end
 
     def trim_encode64(bin)

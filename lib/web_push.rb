@@ -6,18 +6,18 @@ require 'hkdf'
 require 'net/http'
 require 'json'
 
-require 'webpush/version'
-require 'webpush/errors'
-require 'webpush/vapid_key'
-require 'webpush/encryption'
-require 'webpush/request'
-require 'webpush/railtie' if defined?(Rails)
+require 'web_push/version'
+require 'web_push/errors'
+require 'web_push/vapid_key'
+require 'web_push/encryption'
+require 'web_push/request'
+require 'web_push/railtie' if defined?(Rails)
 
 # Push API implementation
 #
 # https://tools.ietf.org/html/rfc8030
 # https://www.w3.org/TR/push-api/
-module Webpush
+module WebPush
   class << self
     # Deliver the payload to the required endpoint given by the JavaScript
     # PushSubscription. Including an optional message requires p256dh and
@@ -36,7 +36,7 @@ module Webpush
     # @option options [#to_s] :urgency Urgency can be very-low, low, normal, high
     # rubocop:disable Metrics/ParameterLists
     def payload_send(message: '', endpoint:, p256dh: '', auth: '', vapid: {}, **options)
-      Webpush::Request.new(
+      WebPush::Request.new(
         message: message,
         subscription: subscription(endpoint, p256dh, auth),
         vapid: vapid,
@@ -48,7 +48,7 @@ module Webpush
     # Generate a VapidKey instance to obtain base64 encoded public and private keys
     # suitable for VAPID protocol JSON web token signing
     #
-    # @return [Webpush::VapidKey] a new VapidKey instance
+    # @return [WebPush::VapidKey] a new VapidKey instance
     def generate_key
       VapidKey.new
     end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Webpush::Request do
+describe WebPush::Request do
   describe '#headers' do
     let(:request) { build_request }
 
@@ -10,7 +10,7 @@ describe Webpush::Request do
 
     describe 'from :message' do
       it 'inserts encryption headers for valid payload' do
-        allow(Webpush::Encryption).to receive(:encrypt).and_return('encrypted')
+        allow(WebPush::Encryption).to receive(:encrypt).and_return('encrypted')
         request = build_request(message: 'Hello')
 
         expect(request.headers['Content-Encoding']).to eq('aes128gcm')
@@ -27,7 +27,7 @@ describe Webpush::Request do
             auth: 'auth'
           }
         }
-        Webpush::Request.new(message: '', subscription: subscription, vapid: {}, **options)
+        WebPush::Request.new(message: '', subscription: subscription, vapid: {}, **options)
       end
 
       it 'inserts Authorization header when api_key present, and endpoint is for Chrome\'s non-standards-compliant GCM endpoints' do
@@ -96,9 +96,9 @@ describe Webpush::Request do
       }
       jwt_header_fields = { "typ": "JWT", "alg": "ES256" }
 
-      vapid_key = Webpush::VapidKey.from_keys(vapid_public_key, vapid_private_key)
+      vapid_key = WebPush::VapidKey.from_keys(vapid_public_key, vapid_private_key)
       expect(Time).to receive(:now).and_return(time)
-      expect(Webpush::VapidKey).to receive(:from_keys).with(vapid_public_key, vapid_private_key).and_return(vapid_key)
+      expect(WebPush::VapidKey).to receive(:from_keys).with(vapid_public_key, vapid_private_key).and_return(vapid_key)
       expect(JWT).to receive(:encode).with(jwt_payload, vapid_key.curve, 'ES256', jwt_header_fields).and_return('jwt.encoded.payload')
 
       request = build_request
@@ -108,8 +108,8 @@ describe Webpush::Request do
     end
 
     it 'supports PEM format' do
-      pem = Webpush::VapidKey.new.to_pem
-      expect(Webpush::VapidKey).to receive(:from_pem).with(pem).and_call_original
+      pem = WebPush::VapidKey.new.to_pem
+      expect(WebPush::VapidKey).to receive(:from_pem).with(pem).and_call_original
       request = build_request(vapid: { subject: 'mailto:sender@example.com', pem: pem })
       request.build_vapid_header
     end
@@ -117,7 +117,7 @@ describe Webpush::Request do
 
   describe '#body' do
     it 'is set to the payload if a message is provided' do
-      allow(Webpush::Encryption).to receive(:encrypt).and_return('encrypted')
+      allow(WebPush::Encryption).to receive(:encrypt).and_return('encrypted')
 
       request = build_request(message: 'Hello')
 
@@ -153,7 +153,7 @@ describe Webpush::Request do
         auth: 'auth'
       }
     }
-    Webpush::Request.new(message: '', subscription: subscription, vapid: vapid_options, **options)
+    WebPush::Request.new(message: '', subscription: subscription, vapid: vapid_options, **options)
   end
 
   def endpoint

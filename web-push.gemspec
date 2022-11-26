@@ -1,10 +1,10 @@
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'webpush/version'
+require 'web_push/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'webpush'
-  spec.version       = Webpush::VERSION
+  spec.name          = 'web-push'
+  spec.version       = WebPush::VERSION
   spec.authors       = ['zaru@sakuraba']
   spec.email         = ['zarutofu@gmail.com']
 

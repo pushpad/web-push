@@ -5,4 +5,4 @@ RSpec::Core::RakeTask.new(:spec)
 
 task default: :spec
 
-import './lib/tasks/webpush.rake'
+import './lib/tasks/web_push.rake'

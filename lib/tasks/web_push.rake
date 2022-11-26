@@ -1,9 +1,9 @@
-namespace :webpush do
+namespace :web_push do
   desc 'Generate VAPID public/private key pair'
   task :generate_keys do
-    require 'webpush'
+    require 'web_push'
 
-    Webpush.generate_key.tap do |keypair|
+    WebPush.generate_key.tap do |keypair|
       puts <<-KEYS
 Generated VAPID keypair:
 Public  -> #{keypair.public_key}

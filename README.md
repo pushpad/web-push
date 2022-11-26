@@ -16,7 +16,7 @@ Payload is supported by Chrome 50+, Firefox 48+, Edge 79+.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'webpush'
+gem 'web-push'
 ```
 
 And then execute:
@@ -25,7 +25,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install webpush
+    $ gem install web-push
 
 ## Usage
 
@@ -34,16 +34,16 @@ Sending a web push message to a visitor of your website requires a number of ste
 1. Your server has (optionally) generated (one-time) a set of [Voluntary Application server Identification (VAPID)](https://tools.ietf.org/html/draft-ietf-webpush-vapid-01) keys. Otherwise, to send messages through Chrome, you have registered your site through the [Google Developer Console](https://console.developers.google.com/) and have obtained a GCM sender id and GCM API key from your app settings.
 2. A `manifest.json` file, linked from your user's page, identifies your app settings.
 3. Also in the user's web browser, a `serviceWorker` is installed and activated and its `pushManager` property is subscribed to push events with your VAPID public key, with creates a `subscription` JSON object on the client side.
-4. Your server uses the `webpush` gem to send a notification with the `subscription` obtained from the client and an optional payload (the message).
+4. Your server uses the `web-push` gem to send a notification with the `subscription` obtained from the client and an optional payload (the message).
 5. Your service worker is set up to receive `'push'` events. To trigger a desktop notification, the user has accepted the prompt to receive notifications from your site.
 
 ### Generating VAPID keys
 
-Use `webpush` to generate a VAPID key that has both a `public_key` and `private_key` attribute to be saved on the server side.
+Use `web-push` to generate a VAPID key that has both a `public_key` and `private_key` attribute to be saved on the server side.
 
 ```ruby
 # One-time, on the server
-vapid_key = Webpush.generate_key
+vapid_key = WebPush.generate_key
 
 # Save these in your application server settings
 vapid_key.public_key
@@ -146,7 +146,7 @@ Hook into an client-side or backend event in your app to deliver a push message.
 // application.js
 // Send the subscription and message from the client for the backend
 // to set up a push notification
-$(".webpush-button").on("click", (e) => {
+$(".web-push-button").on("click", (e) => {
   navigator.serviceWorker.ready
   .then((serviceWorkerRegistration) => {
     serviceWorkerRegistration.pushManager.getSubscription()
@@ -157,14 +157,14 @@ $(".webpush-button").on("click", (e) => {
 });
 ```
 
-Imagine a Ruby app endpoint that responds to the request by triggering notification through the `webpush` gem.
+Imagine a Ruby app endpoint that responds to the request by triggering notification through the `web-push` gem.
 
 ```ruby
 # app.rb
-# Use the webpush gem API to deliver a push notiifcation merging
+# Use the web-push gem API to deliver a push notiifcation merging
 # the message, subscription values, and vapid options
 post "/push" do
-  Webpush.payload_send(
+  WebPush.payload_send(
     message: params[:message],
     endpoint: params[:subscription][:endpoint],
     p256dh: params[:subscription][:keys][:p256dh],
@@ -248,7 +248,7 @@ message = {
   icon: "http://example.com/icon.pn"
 }
 
-Webpush.payload_send(
+WebPush.payload_send(
   endpoint: "https://fcm.googleapis.com/gcm/send/eah7hak....",
   message: JSON.generate(message),
   p256dh: "BO/aG9nYXNkZmFkc2ZmZHNmYWRzZmFl...",
@@ -261,7 +261,7 @@ Webpush.payload_send(
 ### Without a payload
 
 ```ruby
-Webpush.payload_send(
+WebPush.payload_send(
   endpoint: "https://fcm.googleapis.com/gcm/send/eah7hak....",
   p256dh: "BO/aG9nYXNkZmFkc2ZmZHNmYWRzZmFl...",
   auth: "aW1hcmthcmFpa3V6ZQ=="
@@ -271,10 +271,10 @@ Webpush.payload_send(
 ### With VAPID
 
 VAPID details are given as a hash with `:subject`, `:public_key`, and
-`:private_key`. The `:subject` is a contact URI for the application server as either a "mailto:" or an "https:" address. The `:public_key` and `:private_key` should be passed as the base64-encoded values generated with `Webpush.generate_key`.
+`:private_key`. The `:subject` is a contact URI for the application server as either a "mailto:" or an "https:" address. The `:public_key` and `:private_key` should be passed as the base64-encoded values generated with `WebPush.generate_key`.
 
 ```ruby
-Webpush.payload_send(
+WebPush.payload_send(
   endpoint: "https://fcm.googleapis.com/gcm/send/eah7hak....",
   message: "A message",
   p256dh: "BO/aG9nYXNkZmFkc2ZmZHNmYWRzZmFl...",
@@ -292,7 +292,7 @@ Webpush.payload_send(
 This library also supports the PEM format for the VAPID keys:
 
 ```ruby
-Webpush.payload_send(
+WebPush.payload_send(
   endpoint: "https://fcm.googleapis.com/gcm/send/eah7hak....",
   message: "A message",
   p256dh: "BO/aG9nYXNkZmFkc2ZmZHNmYWRzZmFl...",
@@ -307,7 +307,7 @@ Webpush.payload_send(
 ### With GCM api key
 
 ```ruby
-Webpush.payload_send(
+WebPush.payload_send(
   endpoint: "https://fcm.googleapis.com/gcm/send/eah7hak....",
   message: "A message",
   p256dh: "BO/aG9nYXNkZmFkc2ZmZHNmYWRzZmFl...",

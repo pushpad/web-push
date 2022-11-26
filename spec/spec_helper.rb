@@ -1,6 +1,6 @@
 $LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 require 'pry'
-require 'webpush'
+require 'web_push'
 require 'webmock/rspec'
 require 'simplecov'
 WebMock.disable_net_connect!(allow_localhost: true)
