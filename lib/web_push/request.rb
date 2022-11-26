@@ -116,7 +116,7 @@ module WebPush
     end
 
     def subject
-      @vapid_options.fetch(:subject, 'sender@example.com')
+      @vapid_options.fetch(:subject, 'mailto:sender@example.com')
     end
 
     def vapid_public_key
