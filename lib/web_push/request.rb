@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'uri'
-require 'jwt'
-require 'base64'
-
 module WebPush
   # It is temporary URL until supported by the GCM server.
   GCM_URL = 'https://android.googleapis.com/gcm/send'.freeze

@@ -3,6 +3,8 @@
 require 'openssl'
 require 'base64'
 require 'hkdf'
+require 'jwt'
+require 'uri'
 require 'net/http'
 require 'json'
 
@@ -11,7 +13,6 @@ require 'web_push/errors'
 require 'web_push/vapid_key'
 require 'web_push/encryption'
 require 'web_push/request'
-require 'web_push/railtie' if defined?(Rails)
 
 # Push API implementation
 #
