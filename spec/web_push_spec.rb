@@ -221,7 +221,7 @@ describe WebPush do
       allow(WebPush::Encryption).to receive(:encrypt).and_return(payload)
     end
 
-    subject { WebPush.payload_send(message: message, endpoint: endpoint, p256dh: p256dh, auth: auth, api_key: 'GCM_API_KEY') }
+    subject { WebPush.payload_send(message: message, endpoint: endpoint, p256dh: p256dh, auth: auth) }
 
     it 'calls the relevant service with the correct headers' do
       expect(WebPush::Encryption).to receive(:encrypt).and_return(payload)
@@ -247,7 +247,7 @@ describe WebPush do
         .with(body: nil, headers: expected_headers)
         .to_return(status: 201, body: '', headers: {})
 
-      WebPush.payload_send(endpoint: endpoint, api_key: 'GCM_API_KEY')
+      WebPush.payload_send(endpoint: endpoint)
     end
   end
 end

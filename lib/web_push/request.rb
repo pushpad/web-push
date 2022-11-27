@@ -46,9 +46,7 @@ module WebPush
         headers["Content-Length"] = @payload.length.to_s
       end
 
-      if api_key?
-        headers['Authorization'] = "key=#{api_key}"
-      elsif vapid?
+      if vapid?
         headers["Authorization"] = build_vapid_header
       end
 
@@ -131,14 +129,6 @@ module WebPush
 
     def encrypt_payload(message, p256dh:, auth:)
       Encryption.encrypt(message, p256dh, auth)
-    end
-
-    def api_key
-      @options.fetch(:api_key, nil)
-    end
-
-    def api_key?
-      !(api_key.nil? || api_key.empty?) && @endpoint =~ %r{\Ahttps://(android|gcm-http|fcm)\.googleapis\.com}
     end
 
     def vapid?
