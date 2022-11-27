@@ -56,13 +56,10 @@ module WebPush
     end
 
     def build_vapid_header
-      # https://tools.ietf.org/id/draft-ietf-webpush-vapid-03.html
-
       vapid_key = vapid_pem ? VapidKey.from_pem(vapid_pem) : VapidKey.from_keys(vapid_public_key, vapid_private_key)
       jwt = JWT.encode(jwt_payload, vapid_key.curve, 'ES256', jwt_header_fields)
       p256ecdsa = vapid_key.public_key_for_push_header
-
-       "vapid t=#{jwt},k=#{p256ecdsa}"
+      "vapid t=#{jwt},k=#{p256ecdsa}"
     end
 
     def body
