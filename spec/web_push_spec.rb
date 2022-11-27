@@ -194,7 +194,7 @@ describe WebPush do
     include_examples 'request headers with VAPID'
   end
 
-  context 'chrome GCM endpoint: request headers with GCM api key' do
+  context 'chrome endpoint: request headers without VAPID' do
     let(:endpoint) { 'https://fcm.googleapis.com/fcm/subscription-id' }
     let(:expected_endpoint) { 'https://fcm.googleapis.com/fcm/subscription-id' }
 
