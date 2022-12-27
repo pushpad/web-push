@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
 
   spec.files = `git ls-files`.split("\n")
 
-  spec.required_ruby_version = '>= 3.0'
+  spec.required_ruby_version = '>= 2.7'
 
   spec.add_dependency 'hkdf', '~> 1.0'
   spec.add_dependency 'jwt', '~> 2.0'
