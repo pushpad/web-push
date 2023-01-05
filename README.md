@@ -178,7 +178,7 @@ WebPush.payload_send(
   p256dh: "BO/aG9nYXNkZmFkc2ZmZHNmYWRzZmFl...",
   auth: "aW1hcmthcmFpa3V6ZQ==",
   vapid: {
-    subject: "mailto:sender@example.com"
+    subject: "mailto:sender@example.com",
     pem: ENV['VAPID_KEYS']
   }
 )
