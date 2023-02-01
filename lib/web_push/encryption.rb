@@ -8,6 +8,7 @@ module WebPush
       assert_arguments(message, p256dh, auth)
 
       group_name = 'prime256v1'
+      hash = 'SHA256'
       salt = Random.new.bytes(16)
 
       server = OpenSSL::PKey::EC.generate(group_name)
@@ -25,11 +26,11 @@ module WebPush
       content_encryption_key_info = "Content-Encoding: aes128gcm\0"
       nonce_info = "Content-Encoding: nonce\0"
 
-      prk = HKDF.new(shared_secret, salt: client_auth_token, algorithm: 'SHA256', info: info).read(32)
+      prk = OpenSSL::KDF.hkdf(shared_secret, salt: client_auth_token, info: info, hash: hash, length: 32)
 
-      content_encryption_key = HKDF.new(prk, salt: salt, info: content_encryption_key_info).read(16)
+      content_encryption_key = OpenSSL::KDF.hkdf(prk, salt: salt, info: content_encryption_key_info, hash: hash, length: 16)
 
-      nonce = HKDF.new(prk, salt: salt, info: nonce_info).read(12)
+      nonce = OpenSSL::KDF.hkdf(prk, salt: salt, info: nonce_info, hash: hash, length: 12)
 
       ciphertext = encrypt_payload(message, content_encryption_key, nonce)
 
