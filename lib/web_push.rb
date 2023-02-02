@@ -2,7 +2,6 @@
 
 require 'openssl'
 require 'base64'
-require 'hkdf'
 require 'jwt'
 require 'uri'
 require 'net/http'
