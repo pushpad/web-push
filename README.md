@@ -5,6 +5,8 @@
 
 This gem makes it possible to send push messages to web browsers from Ruby backends using the [Web Push Protocol](https://datatracker.ietf.org/doc/html/rfc8030). It supports [Message Encryption for Web Push](https://datatracker.ietf.org/doc/html/rfc8291) and [VAPID](https://datatracker.ietf.org/doc/html/rfc8292).
 
+**Note**: This is an open source gem for Web Push. If you want to send web push notifications from Ruby using Pushpad, you need to use another gem ([pushpad gem](https://github.com/pushpad/pushpad-ruby)).
+
 ## Installation
 
 Add this line to the Gemfile:
