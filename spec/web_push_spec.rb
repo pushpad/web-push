@@ -5,6 +5,18 @@ describe WebPush do
     expect(WebPush::VERSION).not_to be nil
   end
 
+  describe '.decode64' do
+    let(:a_padded_key) { "YWJjZGU=" }
+
+    it 'urlsafe decodes padded base64 string' do
+      expect(WebPush.decode64(a_padded_key)).to eq("abcde")
+    end
+
+    it 'urlsafe decodes unpadded base64 string' do
+      expect(WebPush.decode64(a_padded_key.delete("="))).to eq("abcde")
+    end
+  end
+
   shared_examples 'web push protocol standard error handling' do
     it 'raises InvalidSubscription if the API returns a 404 Error' do
       stub_request(:post, expected_endpoint)
