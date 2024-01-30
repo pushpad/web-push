@@ -55,10 +55,16 @@ navigator.serviceWorker.register('/service-worker.js')
 
 ### Subscribing to push notifications
 
-The VAPID public key you generated earlier is made available to the client as a `UInt8Array`. To do this, one way would be to expose the urlsafe-decoded bytes from Ruby to JavaScript when rendering the HTML template.
+The VAPID public key that you generated earlier needs to be made available to JavaScript, which can be done in many ways, for example with a fetch request or when rendering the HTML template in Ruby:
 
-```javascript
-window.vapidPublicKey = new Uint8Array(<%= Base64.urlsafe_decode64(ENV['VAPID_PUBLIC_KEY']).bytes %>);
+```erb
+<script>
+// Make the VAPID public key available to the client as a Uint8Array
+window.vapidPublicKey = new Uint8Array(<%= Base64.urlsafe_decode64(ENV['VAPID_PUBLIC_KEY']).bytes %>)
+
+// Or you can pass it as a string if you prefer
+window.vapidPublicKey = "<%= ENV['VAPID_PUBLIC_KEY'].delete('=') %>"
+</script>
 ```
 
 Your JavaScript code uses the `pushManager` interface to subscribe to push notifications, passing the VAPID public key to the subscription settings.
