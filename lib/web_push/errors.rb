@@ -26,4 +26,6 @@ module WebPush
   class TooManyRequests < ResponseError; end
 
   class PushServiceError < ResponseError; end
+
+  class UnknownError < ResponseError; end
 end

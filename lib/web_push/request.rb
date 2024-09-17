@@ -154,7 +154,7 @@ module WebPush
       elsif resp.is_a?(Net::HTTPServerError) # 5xx
         raise PushServiceError.new(resp, uri.host)
       elsif !resp.is_a?(Net::HTTPSuccess) # unknown/unhandled response error
-        raise ResponseError.new(resp, uri.host)
+        raise UnknownError.new(resp, uri.host)
       end
     end
   end
