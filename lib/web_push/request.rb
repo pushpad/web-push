@@ -147,6 +147,8 @@ module WebPush
       elsif resp.is_a?(Net::HTTPUnauthorized) || resp.is_a?(Net::HTTPForbidden) || # 401, 403
             resp.is_a?(Net::HTTPBadRequest) && resp.message == 'UnauthorizedRegistration' # 400, Google FCM
         raise Unauthorized.new(resp, uri.host)
+      elsif resp.is_a?(Net::HTTPNotAcceptable) && uri.host.to_s.ends_with?("notify.windows.com") #406 on Edge
+        raise EdgeThrottled.new(resp, uri.host)
       elsif resp.is_a?(Net::HTTPRequestEntityTooLarge) # 413
         raise PayloadTooLarge.new(resp, uri.host)
       elsif resp.is_a?(Net::HTTPTooManyRequests) # 429, try again later!
