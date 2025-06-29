@@ -1,9 +1,12 @@
+require 'simplecov'
+SimpleCov.start do
+  add_filter '/spec/'
+end
+
 require 'web_push'
 require 'webmock/rspec'
-require 'simplecov'
 
 WebMock.disable_net_connect!(allow_localhost: true)
-SimpleCov.start
 
 def vapid_options
   {
